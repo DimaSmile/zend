@@ -4,7 +4,8 @@ return array(
     
     'controllers' => array(
         'invokables' => array(
-            'Admin\Controller\Index' => 'Admin\Controller\IndexController'
+            'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+            'category' => 'Admin\Controller\CategoryController'
         ),
     ),
     
@@ -20,6 +21,21 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+                
+                'may_terminate' => true,
+            
+                'child_routes' =>  array(
+                    'category' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => 'category/[:action/][:id/]',
+                            'defaults' => array(
+                                'controller' => 'category',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+                ),//child_routes
             ),
         ),
     ),
