@@ -17,7 +17,7 @@ return array(
             'orm_default' => array(
                 'drivers' => array(
                     // register `my_annotation_driver` for any entity under namespace `My\Namespace`
-                    'Blog\Namespace' => 'blog_entity'
+                    'Blog\Entity' => 'blog_entity'
                 ),
             ),
         ),
