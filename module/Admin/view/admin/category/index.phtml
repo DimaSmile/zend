@@ -1,6 +1,20 @@
 <h1>Категории</h1>
-
-
+<a href="/admin/category/add/">Добавить</a>
+<?php 
+    $flash = $this->flashMessenger();
+    $flash->setMessageOpenFormat('<div%s>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        &times;
+        </button>
+        <ul><li>')
+        ->setMessageSeparatorString('</li><li>')
+        ->setMessageCloseString('</li></ul></div>');
+    echo $flash->render('error', array('alert', 'alert-dismissable', 'alert-danger'));
+    echo $flash->render('info', array('alert', 'alert-dismissable', 'alert-info'));
+    echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+    echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+    
+?>
 <table class="table table-striped table-hover">
     <tbody>
         <tr>
@@ -9,9 +23,11 @@
             <th>Название</th>
             <th>Действие</th>
         </tr>
-        <tr>
 <?php
-    foreach ($category as $item){?>
+    foreach ($category as $item){
+         echo '<tr>';
+         ?>
+      
 
             <td><?php echo  $item->getId();  ?></td>
             <td><?php echo  $item->getCategoryKey();  ?></td>
@@ -19,8 +35,8 @@
         <?php   echo '<td><a href="'.$this->url('admin/category', array('action' => 'edit', 'id'=> $item->getId())).'">Редактировать</a>&nbsp;&nbsp;
                      <a href="'.$this->url('admin/category', array('action' => 'delete', 'id'=> $item->getId())).'" onclick="if (confirm(\'Удалить запись?\')) { document.location = this.href; } return false;">Удалить</a></td>';
     }
-?>
-             </tr>
+            echo '</tr>';
+        ?>
     </tbody>
 </table>
 
