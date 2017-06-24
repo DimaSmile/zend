@@ -5,7 +5,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
-            'category' => 'Admin\Controller\CategoryController'
+            'category' => 'Admin\Controller\CategoryController',
+            'article' => 'Admin\Controller\ArticleController'
         ),
     ),
     
@@ -31,6 +32,16 @@ return array(
                             'route' => 'category/[:action/][:id/]',
                             'defaults' => array(
                                 'controller' => 'category',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+                    'article' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => 'article/[:action/][:id/]',
+                            'defaults' => array(
+                                'controller' => 'article',
                                 'action'     => 'index',
                             ),
                         ),

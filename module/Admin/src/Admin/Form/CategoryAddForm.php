@@ -3,18 +3,19 @@
 namespace Admin\Form;
 
 use Zend\Form\Form;
+
 //use Zend\InputFilter\Factory as InputFactory;
 //use Zend\InputFilter\InputFilter;
 
-class CategoryAddForm extends Form
-{
+class CategoryAddForm extends Form {
+
     public function __construct($name = null) {
         parent::__construct('categoryAddForm');
         $this->setAttribute('method', 'post');
         $this->setAttribute('class', 'bs-example form-horizontal');
-        
+
         //$this->setInputFilter(new CategoryAddInputFilter());
-        
+
         $this->add(array(
             'name' => 'categoryKey',
             'type' => 'Text',
@@ -28,7 +29,7 @@ class CategoryAddForm extends Form
                 'required' => 'required',
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'categoryName',
             'type' => 'Text',
@@ -42,7 +43,7 @@ class CategoryAddForm extends Form
                 'required' => 'required',
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'submit',
             'type' => 'Submit',
@@ -53,4 +54,5 @@ class CategoryAddForm extends Form
             ),
         ));
     }
+
 }
