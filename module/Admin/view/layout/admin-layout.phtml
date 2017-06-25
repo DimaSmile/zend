@@ -43,16 +43,13 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <!--Навигация-->
-                    <?php echo $this->navigation('navigation')->menu()->setUlClass('nav navbar-nav'); ?>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/admin/">Admin</a></li>
-                    </ul>
+                    <?php echo $this->navigation('admin_navigation')->menu()->setUlClass('nav navbar-nav')->renderSubMenu(); ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
         <div class="container">
             <!--Хлебные крошки-->
-            <?php echo '<br/>' . $this->navigation('navigation')->breadcrumbs(); ?>
+            <?php echo '<br><br>' . $this->navigation('admin_navigation')->breadcrumbs(); ?>
             <?php echo $this->content; ?>
             <hr>
             <footer>

@@ -1,0 +1,44 @@
+<article>
+    <div class="page-header">
+        <h1><?php echo $article->getTitle(); ?></h1>
+    </div>
+    <div>
+        <?php echo $article->getFullArticle();?>
+    </div>
+    
+</article>
+
+<div class="bs-docs-section">
+    <div class="well">
+<?php
+    
+    $form->setAttribute('action', $this->url('blog', array('action' => 'comment-add')));
+    $form->setAttribute('class', 'form-horizontal');
+    $form->prepare();
+    
+    echo $this->form()->openTag($form);
+        echo '<fieldset><legend>Добавить комментарий<legend>';
+            echo '<div id="comment_errors"></div>';
+            
+            $e = $form->get('userEmail');
+            $e->setLabelAttributes(array('class' => 'col-lg-2 control-label'));
+            echo '<div class="form-group">';
+                echo $this->formLabel($e);
+                echo "<div class='col-lg-10'>{$this->formEmail($e)}</div>";
+            echo '</div>';
+            
+            $e = $form->get('comment');
+            $e->setLabelAttributes(array('class' => 'col-lg-2 control-label'));
+            echo '<div class="form-group">';
+                echo $this->formLabel($e);
+                echo "<div class='col-lg-10'>{$this->formTextarea($e)}</div>";
+            echo '</div>';
+            
+            echo "<input type='hidden' value='{$article->getId()}' name='article'>";
+            
+            echo $this->formRow($form->get('submit'));
+    echo '</fieldset>';
+    echo $this->form()->closeTag();    
+?>
+    </div>
+</div>

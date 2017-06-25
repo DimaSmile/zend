@@ -1,1 +1,62 @@
-<h1>IndexController</h1>
+<?php 
+    foreach ($articles as $item){
+        $category = $item->getCategory();
+        if ($category) {
+            $catName = $category->getCategoryName();
+        }else{
+            $catName = '';
+        }
+        
+        if ($item->getIsPublic()) {
+            $isPublic = 'Да';
+        }else{
+            $isPublic = 'Нет';
+        }
+    $url = $this->url('blog', array('action' => 'article', 'id' => $item->getId()));?>
+    <article class='panel panel-default'>
+        <div class="page-header" style="margin-top: 17px;">
+            <h4 style="padding-left: 30px; font-size: 25px;"><a style="color: black;" href="<?php echo $url; ?>"><?php echo $item->getTitle();?></a></h4>
+        </div>
+        <div class="panel-body">
+            <?php echo $item->getShortArticleForBlog(); ?>
+        </div>
+        <div class="panel-footer" style="height: 45px;">
+            <div style="width: 300px; float: left;">
+                Категория: <?php echo $item->getCategory()->getCategoryName(); ?>
+                <span style="float: right;">
+                    <a href="<?php $url; ?>">Читать далее...</a>
+                </span>
+            </div>
+        </div>
+    </article>
+<?php } 
+
+    echo $this->paginationControl($articles,
+                                    'Sliding',
+                                    'pagination_control', array('route'=> 'blog'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>

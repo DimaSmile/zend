@@ -8,6 +8,7 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         
+        'EdpModuleLayouts',
         'Blog',
         'Admin',
                 
