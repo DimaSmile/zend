@@ -79,6 +79,8 @@ class ArticleController extends BaseController
         return $this->redirect()->toRoute('admin/article');
     }
     
+    
+    //Редактирование статьи
     public function editAction() {
         $message = $status = '';
         $em = $this->getEntityManager();
@@ -128,6 +130,32 @@ class ArticleController extends BaseController
                     ->setNamespace($status)
                     ->addMessage($message);
         }
+        
+        return $this->redirect()->toRoute('admin/article');
+    }
+    
+    
+    //Удаление статьи
+    public function deleteAction() {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $em = $this->getEntityManager();
+        
+        $status = 'success';
+        $message = 'Запись удалена';
+        
+        try {
+            $repository = $em->getRepository('Blog\Entity\Article');
+            $article = $repository->find($id);
+            $em->remove($article);
+            $em->flush();
+        } catch (\Exception $ex) {
+            $status = 'error';
+            $message = 'Ошибка удаления записи: '. $ex->getMessage();
+        }
+        
+        $this->flashMessenger()
+                ->setNamespace($status)
+                ->addMessage($message);
         
         return $this->redirect()->toRoute('admin/article');
     }
