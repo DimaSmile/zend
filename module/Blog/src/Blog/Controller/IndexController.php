@@ -59,4 +59,41 @@ class IndexController extends BaseController
         
         return array('article' => $article, 'form' => $form);
     }
+    
+    public function commentAddAction() {
+        $em = $this->getEntityManager();
+        $comment = new Comment();
+        
+        $form = $this->getCommentForm($comment);
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        
+        $data = $request->getPost();
+        
+        if (!empty($data)) {
+            
+            $form->setData($data);
+            $messages = null;
+            
+            if (! $form->isValid()) {
+                $errors = $form->getMessages();
+                foreach ($errors as $key => $row) {
+                    if (!empty($row) && $key != 'submit') {
+                        foreach ($row as $keyer => $rower){
+                            $messages[$key][] = $rower;
+                        }
+                    }
+                }
+            }
+            
+            if (!empty($messages)){
+                $response->setContent(\Zend\Json\Json::encode($messages));
+            }else{
+                $em->persist($comment);
+                $em->flush($comment);
+                $response->setContent(\Zend\Json\Json::encode(array('success' => 1)));
+            }
+        }
+        return $response;
+    }
 }

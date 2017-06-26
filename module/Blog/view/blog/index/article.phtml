@@ -42,3 +42,66 @@
 ?>
     </div>
 </div>
+
+
+<!--Ajax запрос-->
+<script>
+    $(function(){
+        $("form#comment").submit(function(){
+            var fData = $('#comment').serialize();
+            $.ajax({
+                url: '/comment-add/',
+                type: 'post',
+                dataType: 'json',
+                data: fData,
+                success: function(data){
+                        if (data['success'] == 1) {
+                            
+                            $('#new-comment-email h3').html($('#user_email').val());
+                            $('#new-comment-body').html($('#user_comment').val());
+                            $('#new-comment').show();
+                            $('.bs-docs-section').hide('slow');
+                            $('#no-comments').hide();
+                        }else{
+                            $('#comment_errors').html('');
+                            for(var key in data){
+                                $('#comment_errors').append('<span>'+data[key]+'</span>');
+                            }
+                        }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+
+<?php 
+$comments = $article->getComments();
+
+$commentCnt = $comments->count();
+if ($commentCnt) {
+    echo "<h3>Комментарии ($commentCnt)</h3>";
+    foreach ($comments as $comment) {
+        echo "<div class='panel panel-default'>
+                <div class='panel-heading'>
+                    {$comment->getUserEmail()}
+                </div>
+                <div class='panel-body'>
+                    {$comment->getComment()}
+                </div>
+            </div>";
+    }
+}else{
+    echo "<h3 id='no-comments'>Комментариев нет</h3>";
+}
+
+?>
+
+
+<div id="new-comment" class="panel panel-success" style="display: none;">
+    <div id="new-comment-email" class="panel panel-heading">
+        <h3 class="panel-title"></h3>
+    </div>
+    <div id="new-comment-body" class="panel-body"></div>
+</div>

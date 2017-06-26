@@ -4,7 +4,7 @@ namespace Blog\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
+/** 
  * Article
  *
  * @ORM\Table(name="article", indexes={@ORM\Index(name="category", columns={"category"})})
@@ -59,7 +59,15 @@ class Article
      */
     private $category;
 
-
+    /** 
+     * @param \Doctrine\Common\Collections\Collection $property
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="article", cascade={"persist","remove"})
+     */
+    private $comments;
+    
+    public function getComments() {
+        return $this->comments;
+    }
 
     /**
      * Get id

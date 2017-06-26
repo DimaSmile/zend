@@ -5,7 +5,8 @@ return array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
             'category' => 'Admin\Controller\CategoryController',
-            'article' => 'Admin\Controller\ArticleController'
+            'article' => 'Admin\Controller\ArticleController',
+            'comment' => 'Admin\Controller\CommentController',
         ),
     ),
     'router' => array(
@@ -37,6 +38,17 @@ return array(
                             'route' => 'article/[:action/][:id/]',
                             'defaults' => array(
                                 'controller' => 'article',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    
+                    'comment' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => 'comment/[:action/][:id/]',
+                            'defaults' => array(
+                                'controller' => 'comment',
                                 'action' => 'index',
                             ),
                         ),
@@ -90,11 +102,11 @@ return array(
                         'action' => 'add',
                     ),
                     
-//                    array(
-//                        'label' => 'Комментарии',
-//                        'route' => 'admin/comment',
-//                        'action' => 'index',
-//                    ),
+                    array(
+                        'label' => 'Комментарии',
+                        'route' => 'admin/comment',
+                        'action' => 'index',
+                    ),
                 ),
             ),
         ),

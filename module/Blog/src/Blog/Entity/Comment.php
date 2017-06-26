@@ -10,6 +10,7 @@ use Zend\Form\Annotation;
  *
  * @ORM\Table(name="comment", indexes={@ORM\Index(name="article", columns={"article"})})
  * @ORM\Entity
+ * @Annotation\Name("comment")
  */
 class Comment
 {
@@ -44,7 +45,7 @@ class Comment
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Attributes({"id":"user_comment", "class":"form-control", "required":"required"})
      * @Annotation\Options({"label":"Комментарий"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":11, "max":30}})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":300}})
      */
     private $comment;
 
