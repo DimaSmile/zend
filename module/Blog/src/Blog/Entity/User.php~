@@ -1,0 +1,61 @@
+<?php
+
+namespace Blog\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_1483A5E9DFDCDFE1", columns={"usr_name"})})
+ * @ORM\Entity
+ */
+class User
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usr_name", type="string", length=100, nullable=false)
+     */
+    private $usrName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usr_password", type="string", length=100, nullable=false)
+     */
+    private $usrPassword;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usr_email", type="string", length=60, nullable=false)
+     */
+    private $usrEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usr_password_salt", type="string", length=100, nullable=true)
+     */
+    private $usrPasswordSalt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="usr_regitstration_date", type="datetime", nullable=true)
+     */
+    private $usrRegitstrationDate;
+
+
+}
+
