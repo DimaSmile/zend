@@ -1,0 +1,43 @@
+<div class="bs-docs-section">
+    <div class="well">
+<?php
+
+$form->setAttribute('action', $this->url('admin/comment', array('action' => 'edit', 'id' => $id)));
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare();
+
+echo $this->form()->openTag($form);
+    echo '<fieldset><legend>Редактировать комментарий</legend>';
+        echo '<div class="comment_errors"></div>';
+
+        echo '<div class="form-group">';
+            echo '<label class="col-lg-2 control-label">Статья: </label>';?>
+            <div class='col-lg-10'><?php echo $comment->getArticle()->getTitle(); ?></div><?php 
+        echo '</div>';
+        
+        
+        $e = $form->get('userEmail');
+        $e->setLabelAttributes(array('class' => 'col-lg-2 control-label'));
+        echo '<div class="form-group">';
+            echo $this->formLabel($e); ?>
+            <div class='col-lg-10'><?php echo $this->formEmail($e); ?></div><?php 
+        echo '</div>';
+        
+        $e = $form->get('comment');
+        $e->setLabelAttributes(array('class' => 'col-lg-2 control-label'));
+        echo '<div class="form-group">';
+            echo $this->formLabel($e); ?>
+            <div class='col-lg-10'><?php echo $this->formTextarea($e); ?></div><?php 
+        echo '</div>';
+        
+        echo "<input type='hidden' value='{$comment->getId()}' name='id'>";
+        
+echo $this->formRow($form->get('submit'));
+echo '</fieldset>';
+echo $this->form()->closeTag();
+            
+?>
+
+    </div>
+</div>
+

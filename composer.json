@@ -11,6 +11,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.0",
         "zendframework/zend-developer-tools": "0.0.2",
-        "doctrine/doctrine-orm-module": "0.8.0"
+        "doctrine/doctrine-orm-module": "0.8.0",
+        "saeven/zf2-circlical-recaptcha": "0.9"
     }
 }

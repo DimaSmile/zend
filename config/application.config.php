@@ -11,7 +11,7 @@ return array(
         'EdpModuleLayouts',
         'Blog',
         'Admin',
-                
+        'CirclicalRecaptcha',
 
         
     ),
