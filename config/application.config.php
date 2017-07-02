@@ -12,6 +12,7 @@ return array(
         'Blog',
         'Admin',
         'CirclicalRecaptcha',
+        'AuthDoctrine',
 
         
     ),

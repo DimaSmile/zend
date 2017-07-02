@@ -1,0 +1,27 @@
+<?php echo $this->messages; ?>
+
+<?php 
+$user = $this->identity();
+
+if (empty($user)) {
+	$form = $this->form;
+	$form->prepare();
+
+	echo $this->form()->openTag($form);
+	echo $this->formRow($form->get('usrName'));
+	echo $this->formRow($form->get('usrPassword'));
+	echo $this->formSubmit($form->get('submit'));
+	echo $this->form()->closeTag($form);
+
+	echo "Вход не выполнен";
+
+?>
+
+<br><a href="<?php echo $this->url('auth-doctrine/default', array('controller' => 'index', 'action' => 'register')); ?>"><?php echo "Регистрация"; ?></a>
+<?php
+}else{
+	echo "Авторизован как" . $this->escapeHtml($user->getUsrName());
+
+?>
+<br><a href="<?php echo $this->url('auth-doctrine/default', array('controller' => 'index', 'action' => 'logaut')); ?>"><?php echo "Выход"; ?></a>
+<?php } ?>
