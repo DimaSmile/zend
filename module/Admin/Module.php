@@ -22,4 +22,17 @@ class Module
             ),
         );
     }
+
+     public function getServiceConfig(){
+        return array(
+            'factories' => array(
+                'Admin\Service\IsExistValidator' => function($serviceLocator){
+                    $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
+                    $repository = $entityManager->getRepository('Blog\Entity\User');
+
+                    return new \Admin\Service\IsExistValidator($repository);
+                },
+            ),
+        );
+    }
 }

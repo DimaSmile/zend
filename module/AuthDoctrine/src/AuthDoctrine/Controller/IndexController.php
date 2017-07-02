@@ -8,6 +8,8 @@ use Blog\Entity\User;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
+use Zend\Mail\Message;
+
 class IndexController extends BaseController{
     
     public function indexAction() {
@@ -35,6 +37,14 @@ class IndexController extends BaseController{
     	return $form;
     }
 
+    protected function getRegForm(User $user){
+    	$form = $this->getUserForm($user);
+    	$form->setAttribute('action', '/auth-doctrine/index/register/');
+    	$form->get('submit')->setAttribute('value', 'Зарегистрировать');
+    	$form->get('usrEmail')->setAttribute('type', 'email');
+
+    	return $form;
+    }
 
     public function loginAction(){
     	$em = $this->getEntityManager();
@@ -79,4 +89,61 @@ class IndexController extends BaseController{
 
     	return $this->redirect()->toRoute('auth-doctrine/default', array('controller' => 'index', 'action' => 'login'));
     }
+
+    protected function prepareData($user){
+    	$user->setUsrPasswordSalt( md5(time() . 'setUsrPasswordSalt'));
+    	$user->setUsrPassword( md5('staticSalt'. $user->getUsrPassword() . $user->getUsrPasswordSalt()));
+    	return $user;
+    }
+
+	public function registerAction(){
+		$em = $this->getEntityManager();
+		$user = new User;
+
+		$form = $this->getRegForm($user);
+		$request = $this->getRequest();
+
+		if ($request->isPost()) {
+			$data = $request->getPost();
+			$form->setData($data);
+
+			$apiService = $this->getServiceLocator()->get('\Admin\Service\IsExistValidator');//Проверка на существующего пользователя
+
+			if ($form->isValid()) {
+				if ($apiService->exists($user->getUsrName(), array('usrName'))) {
+					$this->flashMessenger()->addErrorMessage('Пользователь с таким именем уже существует - '. $user->getUsrName());
+					return $this->redirect()->toRoute('auth-doctrine/default', array('controller' => 'index', 'action' => 'register'));
+				}
+
+				$this->prepareData($user);
+				$this->sendConfirmationEmail($user);
+
+				$em->persist($user);
+				$em->flush();//добавление пользователя в базу
+
+				return $this->redirect()->toRoute('auth-doctrine/default', array('controller' => 'index', 'action' => 'registration-success'));
+			}
+		}
+		return array('form' => $form);
+	} 
+
+    public function sendConfirmationEmail($user){//Отправка почты
+        $transport = $this->getServiceLocator()->get('mail.transport');
+        $message = new Message();
+        $message->setEncoding("UTF-8");
+
+        $message->addTo($user->getUsrEmail())
+                ->addFrom('efremov2293@gmail.com')
+                ->setSubject('Регистрация')
+                ->setBody("Вы успешно зарегистрированы на" . 
+                    $this->getRequest()->getServer('HTTP_HOST')
+                    );
+
+                $transport->send($message);
+    }
+
+	public function registrationSuccessAction(){
+		
+	}
+
 }

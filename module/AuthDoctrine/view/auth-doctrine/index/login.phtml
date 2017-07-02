@@ -20,7 +20,7 @@ if (empty($user)) {
 <br><a href="<?php echo $this->url('auth-doctrine/default', array('controller' => 'index', 'action' => 'register')); ?>"><?php echo "Регистрация"; ?></a>
 <?php
 }else{
-	echo "Авторизован как" . $this->escapeHtml($user->getUsrName());
+	echo "Авторизован как " . $this->escapeHtml($user->getUsrName());
 
 ?>
 <br><a href="<?php echo $this->url('auth-doctrine/default', array('controller' => 'index', 'action' => 'logaut')); ?>"><?php echo "Выход"; ?></a>
